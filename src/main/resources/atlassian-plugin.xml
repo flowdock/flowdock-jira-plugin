@@ -5,5 +5,7 @@
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
     </plugin-info>
 
+    <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
+
     <component name="Flowdock Change Listener" class="com.flowdock.plugins.jira.IssueChangeListener" key="changeListener"/>
 </atlassian-plugin>
