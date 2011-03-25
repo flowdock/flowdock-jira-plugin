@@ -1,9 +1,5 @@
 package com.flowdock.plugins.jira;
 
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
 import com.atlassian.event.api.EventListener;
 import com.atlassian.event.api.EventPublisher;
 import com.atlassian.jira.event.issue.AbstractIssueEventListener;
@@ -12,7 +8,6 @@ import com.atlassian.jira.event.issue.IssueEventListener;
 
 public class IssueChangeListener extends AbstractIssueEventListener implements
 		IssueEventListener {
-	private static final Logger log = Logger.getLogger(IssueChangeListener.class);
 	private FlowdockEventRenderer eventRenderer;
 	
 	public IssueChangeListener(EventPublisher publisher, FlowdockEventRenderer eventRenderer) {
@@ -24,12 +19,7 @@ public class IssueChangeListener extends AbstractIssueEventListener implements
 	
 	@EventListener
 	public void onIssueEvent(IssueEvent event) {
-		System.out.println("XXX event handler: " + event.toString());
-		log.info("XXX event handler for " + event.toString());
-		
-		for (Map.Entry<String, String> entry : this.eventRenderer.renderEvent(event).entrySet()) {
-			System.out.println("RESULT: " + entry.getKey() + " = " + entry.getValue());
-		}
+		FlowdockConnection.sendApiMessage(this.eventRenderer.renderEvent(event), "1234");
 	}
 
 	/**
