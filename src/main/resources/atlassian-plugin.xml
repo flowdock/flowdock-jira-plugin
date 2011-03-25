@@ -8,4 +8,5 @@
     <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
 
     <component name="Flowdock Change Listener" class="com.flowdock.plugins.jira.IssueChangeListener" key="changeListener"/>
+    <component name="Flowdock Event Renderer" class="com.flowdock.plugins.jira.FlowdockEventRenderer" key="eventRenderer"/>
 </atlassian-plugin>
