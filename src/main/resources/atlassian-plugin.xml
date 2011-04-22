@@ -3,9 +3,18 @@
         <description>${project.description}</description>
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="configure.url">/admin/plugins/flowdock/configurePlugin.action</param>
     </plugin-info>
 
     <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
+    
+    <webwork1 key="configureFlowdock" name="Configure Flowdock integration" class="java.lang.Object">
+    	<actions>
+    		<action name="com.flowdock.plugins.jira.config.ConfigureFlowdockAction" alias="configureFlowdock">
+    			<view name="success" type="velocity">/templates/flowdock/config/configure-flowdock.vm</view>
+    		</action>
+    	</actions>
+    </webwork1>
 
     <component name="Flowdock Change Listener" class="com.flowdock.plugins.jira.IssueChangeListener" key="changeListener"/>
     <component name="Flowdock Event Renderer" class="com.flowdock.plugins.jira.FlowdockEventRenderer" key="eventRenderer"/>
