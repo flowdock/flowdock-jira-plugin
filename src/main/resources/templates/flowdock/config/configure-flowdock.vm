@@ -163,16 +163,16 @@ div.content {
 	
 	#if ($apiKeyPairs.size() > 0)
     <div class="flowdock-container">
-		  <form action="save.action" method="post">
+		  <form action="configureFlowdock!save.jspa" method="post">
         #foreach ($apiKeyPair in $apiKeyPairs)
         <div class="item-wrapper">
           <div class="item">
             <div class="column-left">
-					    $apiKeyPair.space.name
-              <input type="hidden" name="spaceKeys" value="$apiKeyPair.spaceKey"/>
+					    $apiKeyPair.project.name
+              <input type="hidden" name="projectKeys" value="$apiKeyPair.projectKey"/>
             </div>
             <div class="column-right">
-					    <input type="text" size=35 name="apiKeys" value="$!generalUtil.escapeForJavascript($apiKeyPair.apiKey)"/>
+					    <input type="text" size=35 name="apiKeys" value="$apiKeyPair.apiKey"/>
             </div>
           </div>
         </div>

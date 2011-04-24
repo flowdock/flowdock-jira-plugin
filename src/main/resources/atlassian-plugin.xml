@@ -12,7 +12,11 @@
     	<actions>
     		<action name="com.flowdock.plugins.jira.config.ConfigureFlowdockAction" alias="configureFlowdock">
     			<view name="input" type="velocity">/templates/flowdock/config/configure-flowdock.vm</view>
-    			<view name="success" type="velocity">/templates/flowdock/config/configure-flowdock.vm</view>
+    			<view name="success" type="redirect">configureFlowdock.jspa</view>
+    			
+    			<command name="save" alias="save">
+    				<view name="success" type="redirect">configureFlowdock.jspa</view>
+    			</command>
     		</action>
     	</actions>
     </webwork1>
