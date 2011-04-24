@@ -19,7 +19,8 @@ public class FlowdockConfigurationManager {
 	
 	private ProjectManager projectManager;
 	
-	public FlowdockConfigurationManager() {
+	public FlowdockConfigurationManager(ProjectManager manager) {
+		this.projectManager = manager;
 	}
 	
 	/**

@@ -5,19 +5,19 @@
 <body>
 
 <style type="text/css">
-.pagebody .content {
+div.content {
   margin: 0 0 0 20px;
   font-size: 15px;
 }
-.pagebody .content .flowdock-header {
+.content .flowdock-header {
   margin-bottom: 20px;
   height: 85px;
 }
-.pagebody .content .flowdock-container {
+.content .flowdock-container {
   float: left;
   margin: 15px 0 15px 0;
 }
-.pagebody .content .description {
+.content .description {
         float: left;
   width: 400px;
   font-size: 18px;
@@ -27,26 +27,26 @@
   font-family: Helvetica, Arial, sans-serif;
   color: #474747;
 }
-.pagebody .content .description a:link,
-.pagebody .content .description a:active{
+.content .description a:link,
+.content .description a:active{
         color: #0072bc;
         text-decoration: none;
 }
-.pagebody .content .description a:visited {
+.content .description a:visited {
         color: #0072bc;
         text-decoration: none;
 }
-.pagebody .content .description a:hover {
+.content .description a:hover {
         color: #000;
 }
-.pagebody .content .flowdock-logo {
+.content .flowdock-logo {
         float: left;
         width: 78px;
         height: 85px;
         padding-right: 10px;
         background: #FFF url('https://static.flowdock.com/images/confluence/flowdock-logo-notext-dropshadow.png') no-repeat;
 }
-.pagebody .content .item {
+.content .item {
   float: left;
   padding: 14px 14px 14px 19px;
   border: 1px solid #d4d4d4;
@@ -61,7 +61,7 @@
   box-shadow:inset 0 0 10px #FFF;
   text-shadow: 0 1px 0px #FFF;
 }
-.pagebody .content .item-wrapper {
+.content .item-wrapper {
         float: left;
         margin: 0 0 10px 0;
         padding: 0;
@@ -70,12 +70,12 @@
          box-shadow: 0 0 5px #e2e2e2;
 }
 
-.pagebody .content .item:hover {
+.content .item:hover {
   background-color: #F1F1F1;
   border: 3px solid rgba(42,169,230,0.3);
   padding: 12px 12px 12px 17px;
 }
-.pagebody .content .column-left {
+.content .column-left {
   float: left;
   width: 230px;
   margin: auto 0 auto 0;
@@ -84,20 +84,20 @@
   font-weight: bold;
   border-right: 1px solid #FFF;
 }
-.pagebody .content .column-left p {
+.content .column-left p {
   margin: 0 0 0 0;
   font-size: 13px;
   line-height: 20px;
   color: #474747;
 }
-.pagebody .content .column-right {
+.content .column-right {
   float: left;
   height: 100%;
   line-height: 40px;
   padding-left: 20px;
   border-left: 1px solid #e2e2e2;
 }
-.pagebody .content .column-right .apikey {
+.content .column-right .apikey {
         width: 150px;
         height: 20px;
         background: #FFF url('https://static.flowdock.com/images/confluence/bullet_key.png') no-repeat 98% 50%;
@@ -111,11 +111,11 @@
         -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-.pagebody .content .column-right .apikey:focus {
+.content .column-right .apikey:focus {
   color: #000;
   background-color: #FFFDCC;
 }
-.pagebody .content .flowdock-container button.submit-button {
+.content .flowdock-container button.submit-button {
   margin-top: 10px;
   padding: 3px;
   height: 35px;
@@ -136,13 +136,13 @@
   box-shadow: 0 0 5px #e2e2e2;
   text-shadow: 0 1px 0px #FFF;
 }
-.pagebody .content .flowdock-container button.submit-button:hover {
+.content .flowdock-container button.submit-button:hover {
   background-color: #F1F1F1;
   border: 3px solid rgba(42,169,230,0.3);
   padding: 0;
   color: #000;
 }
-.pagebody .content .flowdock-container img.tick {
+.content .flowdock-container img.tick {
   height: 16px;
   width: 16px;
   padding: 0;
