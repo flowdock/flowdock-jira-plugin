@@ -71,7 +71,7 @@ public class FlowdockConfigurationManager {
 	public String getApiKeyForProject(Project project) {
 		List<ApiKeyPair> pairs = this.getFlowdockApiKeys();
 		for (ApiKeyPair pair : pairs) {
-			if (pair.getProject() == project) {
+			if (pair.getProject().getKey().equals(project.getKey())) {
 				return pair.getApiKey();
 			}
 		}

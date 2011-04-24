@@ -71,6 +71,6 @@ public class FlowdockConnection {
 	private static URL getApiUrl(String apiKey) throws MalformedURLException {
 		// return new URL("https://api.flowdock.com/v1/jira/" + apiKey);
 		// return new URL("http://www.postbin.org/1gqytfp");
-    return new URL("https://api.tuntivirta.com/v1/jira/e20a476ace29a678231e2a5a07d03ea7");
+		return new URL("https://api.tuntivirta.com/v1/jira/" + apiKey);
 	}
 }
