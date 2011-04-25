@@ -1,13 +1,7 @@
 package com.flowdock.plugins.jira.config;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import com.atlassian.jira.config.properties.PropertiesManager;
 import com.atlassian.jira.project.Project;
@@ -15,7 +9,7 @@ import com.atlassian.jira.project.ProjectManager;
 import com.opensymphony.module.propertyset.PropertySet;
 
 public class FlowdockConfigurationManager {
-	public static final String FLOWDOCK_API_KEYS = "ext.flowdock.api.keys";
+	public static final String FLOWDOCK_API_KEYS_PREFIX = "ext.flowdock.api.keys.";
 	
 	private ProjectManager projectManager;
 	
@@ -33,11 +27,10 @@ public class FlowdockConfigurationManager {
 	 */
 	public List<ApiKeyPair> getFlowdockApiKeys() {
 		List<ApiKeyPair> result = new ArrayList<ApiKeyPair>();
-		Properties props = this.readApiKeyPropertiesObj();
 		
 		List<Project> projects = this.projectManager.getProjectObjects();
 		for (Project project : projects) {	
-			String apiKey = props.getProperty(project.getKey());
+			String apiKey = this.getApiKeyForProject(project);
 			result.add(new ApiKeyPair(project, apiKey));
 		}
 		
@@ -50,55 +43,29 @@ public class FlowdockConfigurationManager {
 	 * @param apiKeys
 	 */
 	public void setFlowdockApiKeys(List<ApiKeyPair> apiKeys) {
-		Properties props = new Properties();
-		
 		for (ApiKeyPair pair : apiKeys) {
-			props.put(pair.getProjectKey(), pair.getApiKey());
+			this.setApiKeyForProject(pair.getProjectKey(), pair.getApiKey());
 		}
-		
-		OutputStream out = new ByteArrayOutputStream();
-		try {
-			props.store(out, null);
-		} catch (IOException ioe) {} // seems unlikely to happen
-		
-		// Store properties to PropertySet
-		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
-		try { PS.remove(FLOWDOCK_API_KEYS); } catch (Exception e) {} // Cannot overwrite pre-existing keys
-		
-		PS.setText(FLOWDOCK_API_KEYS, out.toString());
 	}
 	
 	public String getApiKeyForProject(Project project) {
-		List<ApiKeyPair> pairs = this.getFlowdockApiKeys();
-		for (ApiKeyPair pair : pairs) {
-			if (pair.getProject().getKey().equals(project.getKey())) {
-				return pair.getApiKey();
-			}
-		}
+		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+		String apiKey = PS.getText(FLOWDOCK_API_KEYS_PREFIX + project.getKey());
+		return apiKey;
+	}
+	
+	public synchronized void setApiKeyForProject(String projectKey, String apiKey) {
+		String propertyKey = FLOWDOCK_API_KEYS_PREFIX + projectKey;
 		
-		return null;
+		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+		try { PS.remove(propertyKey); } catch (Exception e) {} // Cannot overwrite pre-existing keys
+		
+		PS.setText(propertyKey, apiKey);
 	}
 	
 	// Bean configuration
 
 	public void setProjectManager(ProjectManager manager) {
 		this.projectManager = manager;
-	}
-	
-	// Helpers
-	
-	private Properties readApiKeyPropertiesObj() {
-		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
-		String propsString = PS.getText(FLOWDOCK_API_KEYS);
-		if (propsString == null) propsString = ""; // initially it doesn't exist
-		
-		Properties props = new Properties();
-		InputStream in = new ByteArrayInputStream(propsString.getBytes());
-		
-		try {
-			props.load(in);
-		} catch (IOException ioe) {} // seems unlikely to happen
-		
-		return props;
 	}
 }
