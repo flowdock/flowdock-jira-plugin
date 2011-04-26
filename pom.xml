@@ -14,8 +14,8 @@
         <url>http://www.flowdock.com/</url>
     </organization>
 
-    <name>Flowdock integration</name>
-    <description>Flowdock is the most advanced team messenger. This plugin streams your changes from Confluence to your team's Flowdock flow.</description>
+    <name>Flowdock</name>
+    <description>Flowdock is a collaboration tool for technical teams. This plugin streams your activity from JIRA to your team's Flowdock feed.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencies>
