@@ -172,7 +172,7 @@ div.content {
               <input type="hidden" name="projectKeys" value="$apiKeyPair.projectKey"/>
             </div>
             <div class="column-right">
-					    <input type="text" size=35 name="apiKeys" value="$apiKeyPair.apiKey"/>
+					    <input type="text" size=35 name="apiKeys" value="$apiKeyPair.apiKeyNotNull"/>
             </div>
           </div>
         </div>

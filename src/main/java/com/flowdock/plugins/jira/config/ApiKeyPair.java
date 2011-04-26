@@ -41,6 +41,14 @@ public class ApiKeyPair {
 		return apiKey;
 	}
 	
+	public String getApiKeyNotNull() {
+		if (this.apiKey == null) {
+			return "";
+		} else {
+			return this.apiKey;
+		}
+	}
+	
 	public String getProjectKey() {
 		return this.projectKey;
 	}
