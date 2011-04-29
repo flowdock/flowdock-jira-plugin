@@ -57,12 +57,22 @@ public class FlowdockEventRenderer {
 		}
 		
 		// Fields
-		result.put("issue_assignee_name", issue.getAssignee().getFullName());
-		result.put("issue_assignee_email", issue.getAssignee().getEmail());
-		result.put("issue_reporter_name", issue.getReporter().getFullName());
-		result.put("issue_reporter_email", issue.getReporter().getEmail());
+		if (issue.getAssignee() != null) {
+			result.put("issue_assignee_name", issue.getAssignee().getFullName());
+			result.put("issue_assignee_email", issue.getAssignee().getEmail());
+		}
+		
+		if (issue.getReporter() != null) {
+			result.put("issue_reporter_name", issue.getReporter().getFullName());
+			result.put("issue_reporter_email", issue.getReporter().getEmail());
+		}
+		
 		result.put("issue_summary", issue.getSummary());
-		result.put("issue_priority", issue.getPriorityObject().getName());
+		
+		if (issue.getPriorityObject() != null) {
+			result.put("issue_priority", issue.getPriorityObject().getName());
+		}
+		
 		result.put("issue_votes", issue.getVotes().toString());
 		result.put("issue_environment", issue.getEnvironment());
 		
