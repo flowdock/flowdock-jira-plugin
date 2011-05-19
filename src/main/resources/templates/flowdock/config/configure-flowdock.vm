@@ -46,6 +46,17 @@ div.content {
         padding-right: 10px;
         background: #FFF url('https://static.flowdock.com/images/confluence/flowdock-logo-notext-dropshadow.png') no-repeat;
 }
+
+.content .header {
+  float: left;
+  padding: 0 14px 0 19px;
+  font-size: 17px !important;
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-weight: bold !important;
+  line-height: 40px;
+}
+
+
 .content .item {
   float: left;
   padding: 14px 14px 14px 19px;
@@ -61,10 +72,16 @@ div.content {
   box-shadow:inset 0 0 10px #FFF;
   text-shadow: 0 1px 0px #FFF;
 }
-.content .item-wrapper {
+
+.content .item-wrapper, .content .header-wrapper {
         float: left;
+        clear: both;
         margin: 0 0 10px 0;
         padding: 0;
+        font-size: 15px;
+}
+
+.content .item-wrapper {
         -moz-box-shadow: 0 0 5px #e2e2e2;
          -webkit-box-shadow: 0 0 5px #e2e2e2;
          box-shadow: 0 0 5px #e2e2e2;
@@ -77,11 +94,9 @@ div.content {
 }
 .content .column-left {
   float: left;
-  width: 230px;
+  width: 200px;
   margin: auto 0 auto 0;
   padding-right: 20px;
-  font-size: 15px;
-  font-weight: bold;
   border-right: 1px solid #FFF;
 }
 .content .column-left p {
@@ -95,15 +110,19 @@ div.content {
   height: 100%;
   line-height: 40px;
   padding-left: 20px;
+}
+
+.content .item .column-right {
   border-left: 1px solid #e2e2e2;
 }
+
 .content .column-right .apikey {
-        width: 150px;
-        height: 20px;
+        width: 240px;
+        height: 14px;
         background: #FFF url('https://static.flowdock.com/images/confluence/bullet_key.png') no-repeat 98% 50%;
         padding: 3px 25px 3px 3px;
         line-height: 20px;
-  font-size: 15px;
+  font-size: 12px;
   font-family: "Lucida Console", "Verdana", "Arial", sans-serif;
   color: #474747;
         border: 2px solid #d4d4d4;
@@ -115,33 +134,7 @@ div.content {
   color: #000;
   background-color: #FFFDCC;
 }
-.content .flowdock-container button.submit-button {
-  margin-top: 10px;
-  padding: 3px;
-  height: 35px;
-  width: 150px;
-  float: left;
-  display: block;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 35px;
-  color: #474747;
-  background-color: #F0F0F0;
-  border: 1px solid #d4d4d4;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  border-radius: 6px;
-  -moz-box-shadow: 0 0 5px #e2e2e2;
-  -webkit-box-shadow: 0 0 5px #e2e2e2;
-  box-shadow: 0 0 5px #e2e2e2;
-  text-shadow: 0 1px 0px #FFF;
-}
-.content .flowdock-container button.submit-button:hover {
-  background-color: #F1F1F1;
-  border: 3px solid rgba(42,169,230,0.3);
-  padding: 0;
-  color: #000;
-}
+
 .content .flowdock-container img.tick {
   height: 16px;
   width: 16px;
@@ -163,7 +156,14 @@ div.content {
 	
 	#if ($apiKeyPairs.size() > 0)
     <div class="flowdock-container">
-		  <form action="configureFlowdock!save.jspa" method="post">
+      <form action="configureFlowdock!save.jspa" method="post">
+        <div class="header-wrapper header">
+          <div class="header">
+            <div class="column-left">Project</div>
+            <div class="column-right">Flow API Token</div>
+          </div>
+        </div>
+
         #foreach ($apiKeyPair in $apiKeyPairs)
         <div class="item-wrapper">
           <div class="item">
@@ -172,14 +172,16 @@ div.content {
               <input type="hidden" name="projectKeys" value="$apiKeyPair.projectKey"/>
             </div>
             <div class="column-right">
-					    <input type="text" size=35 name="apiKeys" value="$apiKeyPair.apiKeyNotNull"/>
+					    <input type="text" size=35 name="apiKeys" class="apikey" value="$apiKeyPair.apiKeyNotNull"/>
             </div>
           </div>
         </div>
         <div style="clear: both"/>
         #end
+        
+        <input type="submit" class="spaced" value="Save changes" />
       </form>
-      <button type="submit" value="Save changes">Save changes</button>
+      
     </div>
 	#else
 		<p>Please create at least one JIRA project before configuring the Flowdock integration.</p>
