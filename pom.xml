@@ -14,7 +14,7 @@
         <url>http://www.flowdock.com/</url>
     </organization>
 
-    <name>Flowdock</name>
+    <name>Flowdock for JIRA</name>
     <description>Flowdock is a collaboration tool for technical teams. This plugin streams your activity from JIRA to your team's Flowdock feed.</description>
     <packaging>atlassian-plugin</packaging>
 
