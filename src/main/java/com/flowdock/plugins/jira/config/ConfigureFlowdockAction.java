@@ -3,6 +3,7 @@ package com.flowdock.plugins.jira.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.atlassian.jira.security.xsrf.RequiresXsrfCheck;
 import com.atlassian.jira.web.action.JiraWebActionSupport;
 
 public class ConfigureFlowdockAction extends JiraWebActionSupport {
@@ -31,6 +32,7 @@ public class ConfigureFlowdockAction extends JiraWebActionSupport {
 		return INPUT;
 	}
 	
+	@RequiresXsrfCheck
 	public String doSave() {
 		List<ApiKeyPair> pairs = this.parseApiKeyPairs();
 		this.flowdockConfigurationManager.setFlowdockApiKeys(pairs);

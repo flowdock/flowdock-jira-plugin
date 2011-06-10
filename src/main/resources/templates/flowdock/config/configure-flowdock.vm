@@ -157,6 +157,7 @@ div.content {
 	#if ($apiKeyPairs.size() > 0)
     <div class="flowdock-container">
       <form action="configureFlowdock!save.jspa" method="post">
+        <input type="hidden" name="atl_token" value="$atl_token"/>
         <div class="header-wrapper header">
           <div class="header">
             <div class="column-left">Project</div>
