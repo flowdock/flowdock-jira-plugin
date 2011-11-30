@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.atlassian.jira.config.properties.PropertiesManager;
+import com.atlassian.jira.config.properties.DbBackedPropertiesManager;
 import com.atlassian.jira.project.Project;
 import com.atlassian.jira.project.ProjectManager;
 import com.opensymphony.module.propertyset.PropertySet;
@@ -49,7 +50,7 @@ public class FlowdockConfigurationManager {
 	}
 	
 	public String getApiKeyForProject(Project project) {
-		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+		PropertySet PS = this.getPropertySet();
 		String apiKey = PS.getText(FLOWDOCK_API_KEYS_PREFIX + project.getKey());
 		return apiKey;
 	}
@@ -57,7 +58,7 @@ public class FlowdockConfigurationManager {
 	public synchronized void setApiKeyForProject(String projectKey, String apiKey) {
 		String propertyKey = FLOWDOCK_API_KEYS_PREFIX + projectKey;
 		
-		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+		PropertySet PS = this.getPropertySet();
 		try { PS.remove(propertyKey); } catch (Exception e) {} // Cannot overwrite pre-existing keys
 		
 		PS.setText(propertyKey, apiKey);
@@ -67,5 +68,9 @@ public class FlowdockConfigurationManager {
 
 	public void setProjectManager(ProjectManager manager) {
 		this.projectManager = manager;
+	}
+
+	private PropertySet getPropertySet() {
+		return new PropertiesManager(new DbBackedPropertiesManager()).getPropertySet();
 	}
 }
