@@ -26,8 +26,8 @@ public class FlowdockEventRenderer {
 		}
 		
 		// User
-		result.put("user_email", event.getRemoteUser().getEmail());
-		result.put("user_name", event.getRemoteUser().getFullName());
+		result.put("user_email", event.getUser().getEmailAddress());
+		result.put("user_name", event.getUser().getDisplayName());
 		
 		// Project
 		result.put("project_name", event.getIssue().getProjectObject().getName());
@@ -58,13 +58,13 @@ public class FlowdockEventRenderer {
 		
 		// Fields
 		if (issue.getAssignee() != null) {
-			result.put("issue_assignee_name", issue.getAssignee().getFullName());
-			result.put("issue_assignee_email", issue.getAssignee().getEmail());
+			result.put("issue_assignee_name", issue.getAssigneeUser().getDisplayName());
+			result.put("issue_assignee_email", issue.getAssigneeUser().getEmailAddress());
 		}
 		
 		if (issue.getReporter() != null) {
-			result.put("issue_reporter_name", issue.getReporter().getFullName());
-			result.put("issue_reporter_email", issue.getReporter().getEmail());
+			result.put("issue_reporter_name", issue.getReporterUser().getDisplayName());
+			result.put("issue_reporter_email", issue.getReporterUser().getEmailAddress());
 		}
 		
 		result.put("issue_summary", issue.getSummary());

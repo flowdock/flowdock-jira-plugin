@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flowdock.plugins.jira</groupId>
     <artifactId>flowdock-jira-plugin</artifactId>
-    <version>1.0.4</version>
+    <version>1.44.1</version>
 
     <organization>
         <name>Flowdock Ltd</name>
@@ -62,7 +62,7 @@
     </build>
 
     <properties>
-        <jira.version>4.2</jira.version>
+        <jira.version>4.4</jira.version>
         <jira.data.version>4.1.1</jira.data.version>
     </properties>
 
