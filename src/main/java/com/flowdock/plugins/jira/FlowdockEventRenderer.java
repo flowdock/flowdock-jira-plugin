@@ -2,19 +2,27 @@ package com.flowdock.plugins.jira;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 import com.atlassian.jira.ManagerFactory;
 import com.atlassian.jira.config.properties.APKeys;
 import com.atlassian.jira.event.issue.IssueEvent;
 import com.atlassian.jira.event.type.EventType;
 import com.atlassian.jira.issue.Issue;
+import com.atlassian.jira.util.JiraVelocityHelper;
+import com.atlassian.jira.security.JiraAuthenticationContext;
+import com.atlassian.jira.ComponentManager;
 
 public class FlowdockEventRenderer {
 	private String baseUrl;
+	private JiraVelocityHelper jiraVelocityHelper;
+	private JiraAuthenticationContext jiraAuthenticationContext;
 	
-	public FlowdockEventRenderer() {
+	public FlowdockEventRenderer(final JiraAuthenticationContext jiraAuthenticationContext) {
 		// Magic trick to get the JIRA baseUrl.
 		this.baseUrl = ManagerFactory.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
+		this.jiraVelocityHelper = new JiraVelocityHelper(ComponentManager.getInstance().getFieldManager());;
+		this.jiraAuthenticationContext = jiraAuthenticationContext;
 	}
 	
 	public Map<String, String> renderEvent(IssueEvent event) {
@@ -68,6 +76,8 @@ public class FlowdockEventRenderer {
 		}
 		
 		result.put("issue_summary", issue.getSummary());
+
+		result.put("issue_changelog", getChangelog(event));
 		
 		if (issue.getPriorityObject() != null) {
 			result.put("issue_priority", issue.getPriorityObject().getName());
@@ -78,6 +88,16 @@ public class FlowdockEventRenderer {
 		
 		if (issue.getDescription() != null) {
 			result.put("issue_description", issue.getDescription());
+		}
+	}
+
+	private String getChangelog(IssueEvent event) {
+		try {
+			return this.jiraVelocityHelper.printChangelog(event.getChangeLog(),
+				this.jiraAuthenticationContext.getI18nHelper(), new ArrayList<String>(), false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
