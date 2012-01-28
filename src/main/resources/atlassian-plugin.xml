@@ -21,6 +21,13 @@
     	</actions>
     </webwork1>
 
+    <!-- The section is present from JIRA 4.4 onwards -->
+    <web-item name="Configure Flowdock menu link" key="configure-flowdock-menu" section="admin_plugins_menu/integrations_section" weight="1000">
+        <description key="configure-flowdocklink.description">Adds the link under Plugins menu to configure the Flowdock integration.</description>
+        <label>Flowdock integration</label>
+        <link linkId="configure-flowdock-link">/secure/configureFlowdock.jspa</link>
+    </web-item>
+
     <component name="Flowdock Change Listener" class="com.flowdock.plugins.jira.IssueChangeListener" key="changeListener"/>
     <component name="Flowdock Event Renderer" class="com.flowdock.plugins.jira.FlowdockEventRenderer" key="eventRenderer"/>
     <component name="Flowdock Configuration Manager" class="com.flowdock.plugins.jira.config.FlowdockConfigurationManager" key="flowdockConfigurationManager"/>
