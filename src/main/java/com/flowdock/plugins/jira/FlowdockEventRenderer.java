@@ -3,6 +3,8 @@ package com.flowdock.plugins.jira;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.List;
+import java.lang.reflect.Type;
 
 import com.atlassian.jira.ManagerFactory;
 import com.atlassian.jira.config.properties.APKeys;
@@ -10,19 +12,25 @@ import com.atlassian.jira.event.issue.IssueEvent;
 import com.atlassian.jira.event.type.EventType;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.util.JiraVelocityHelper;
+import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.ComponentManager;
+import org.ofbiz.core.entity.GenericValue;
+
+import com.google.gson.Gson;
 
 public class FlowdockEventRenderer {
 	private String baseUrl;
 	private JiraVelocityHelper jiraVelocityHelper;
 	private JiraAuthenticationContext jiraAuthenticationContext;
+	private I18nHelper i18nHelper;
 	
 	public FlowdockEventRenderer(final JiraAuthenticationContext jiraAuthenticationContext) {
 		// Magic trick to get the JIRA baseUrl.
 		this.baseUrl = ManagerFactory.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
 		this.jiraVelocityHelper = new JiraVelocityHelper(ComponentManager.getInstance().getFieldManager());;
 		this.jiraAuthenticationContext = jiraAuthenticationContext;
+		this.i18nHelper = this.jiraAuthenticationContext.getI18nHelper();
 	}
 	
 	public Map<String, String> renderEvent(IssueEvent event) {
@@ -93,12 +101,46 @@ public class FlowdockEventRenderer {
 
 	private String getChangelog(IssueEvent event) {
 		try {
-			return this.jiraVelocityHelper.printChangelog(event.getChangeLog(),
-				this.jiraAuthenticationContext.getI18nHelper(), new ArrayList<String>(), false);
+			List<Map<String, String>> data = this.getChangelogArray(event);
+			Gson gson = new Gson();
+			String json = gson.toJson(data);
+			return json;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	private List<Map<String, String>> getChangelogArray(IssueEvent event) throws Exception {
+		ArrayList<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+		GenericValue changelog = event.getChangeLog();
+		if (changelog == null || changelog.getRelated("ChildChangeItem") == null) return null;
+
+		for (GenericValue changedItem : changelog.getRelated("ChildChangeItem")) {
+			// This pattern is borrowed from jira-project/jira-components/jira-core/src/main/resources/templates/email/html/includes/fields/changelog.vm
+			String oldStringKey, newStringKey;
+			if (changedItem.getString("field") == "Comment") {
+				oldStringKey = "oldvalue";
+				newStringKey = "newvalue";
+			} else {
+				oldStringKey = "oldstring";
+				newStringKey = "newstring";
+			}
+
+			String fieldName = this.jiraVelocityHelper.getFieldName(changedItem, this.i18nHelper);
+			String oldValue = this.jiraVelocityHelper.getPrettyFieldString(changedItem.getString("field"), changedItem.getString(oldStringKey), this.i18nHelper);
+			String newValue = this.jiraVelocityHelper.getPrettyFieldString(changedItem.getString("field"), changedItem.getString(newStringKey), this.i18nHelper);
+
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("field", fieldName);
+			map.put("old_value", oldValue);
+			map.put("new_value", newValue);
+
+			result.add(map);
+		}
+
+		return result;
 	}
 	
 	private void addEventType(HashMap<String, String> result, IssueEvent event) {
