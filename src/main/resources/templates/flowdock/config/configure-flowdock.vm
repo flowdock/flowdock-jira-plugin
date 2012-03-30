@@ -169,8 +169,8 @@ div.content {
         <div class="item-wrapper">
           <div class="item">
             <div class="column-left">
-              $apiKeyPair.project.name
-              <input type="hidden" name="projectKeys" value="$apiKeyPair.projectKey"/>
+              $textutils.htmlEncode($apiKeyPair.project.name)
+              <input type="hidden" name="projectKeys" value="$textutils.htmlEncode($apiKeyPair.projectKey)"/>
             </div>
             <div class="column-right">
               <input type="text" size=35 name="apiKeys" class="apikey" value="$textutils.htmlEncode($apiKeyPair.apiKeyNotNull)"/>
