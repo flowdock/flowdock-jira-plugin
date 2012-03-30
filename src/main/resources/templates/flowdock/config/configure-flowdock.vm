@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Configure Flowdock integration in JIRA</title>
+  <title>Configure Flowdock integration in JIRA</title>
 </head>
 <body>
 
@@ -147,14 +147,14 @@ div.content {
   <div class="flowdock-header">
     <span class="flowdock-logo"/>
     <span class="description">
-	    Flowdock keeps your team up-to-date about what's happening in JIRA. Check out the <a href="https://www.flowdock.com/help/jira" target="_blank">help page</a> to get an API token and more instructions.
+      Flowdock keeps your team up-to-date about what's happening in JIRA. Check out the <a href="https://www.flowdock.com/help/jira" target="_blank">help page</a> to get an API token and more instructions.
     </span>
   </div>
 
   <div style="clear: both"/>
 
-	
-	#if ($apiKeyPairs.size() > 0)
+
+  #if ($apiKeyPairs.size() > 0)
     <div class="flowdock-container">
       <form action="configureFlowdock!save.jspa" method="post">
         <input type="hidden" name="atl_token" value="$atl_token"/>
@@ -169,24 +169,24 @@ div.content {
         <div class="item-wrapper">
           <div class="item">
             <div class="column-left">
-					    $apiKeyPair.project.name
+              $apiKeyPair.project.name
               <input type="hidden" name="projectKeys" value="$apiKeyPair.projectKey"/>
             </div>
             <div class="column-right">
-					    <input type="text" size=35 name="apiKeys" class="apikey" value="$textutils.htmlEncode($apiKeyPair.apiKeyNotNull)"/>
+              <input type="text" size=35 name="apiKeys" class="apikey" value="$textutils.htmlEncode($apiKeyPair.apiKeyNotNull)"/>
             </div>
           </div>
         </div>
         <div style="clear: both"/>
         #end
-        
+
         <input type="submit" class="spaced" value="Save changes" />
       </form>
-      
+
     </div>
-	#else
-		<p>Please create at least one JIRA project before configuring the Flowdock integration.</p>
-	#end
+  #else
+    <p>Please create at least one JIRA project before configuring the Flowdock integration.</p>
+  #end
 </div>
 </body>
 </html>
