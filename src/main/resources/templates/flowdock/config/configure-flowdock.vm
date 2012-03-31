@@ -147,7 +147,7 @@ div.content {
   <div class="flowdock-header">
     <span class="flowdock-logo"/>
     <span class="description">
-      Flowdock keeps your team up-to-date about what's happening in JIRA. Check out the <a href="https://www.flowdock.com/help/jira" target="_blank">help page</a> to get an API token and more instructions.
+      Flowdock keeps your team up-to-date about what's happening in JIRA. Check out the <a href="https://www.flowdock.com/help/jira?utm_campaign=jira_config&utm_source=jira" target="_blank">help page</a> to get an API token and more instructions.
     </span>
   </div>
 
