@@ -47,9 +47,7 @@ public class ConfigureFlowdockAction extends JiraWebActionSupport {
 		}
 		
 		for (int i=0; i<this.projectKeys.length; i++) {
-			if (this.apiKeys[i] != null && this.apiKeys[i] != "") {
-				result.add(new ApiKeyPair(this.projectKeys[i], this.apiKeys[i]));
-			}
+			result.add(new ApiKeyPair(this.projectKeys[i], this.apiKeys[i]));
 		}
 		
 		return result;
