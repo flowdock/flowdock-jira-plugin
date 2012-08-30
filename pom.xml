@@ -68,7 +68,7 @@
     </build>
 
     <properties>
-        <jira.version>5.0</jira.version>
+        <jira.version>5.1</jira.version>
         <jira.data.version>LATEST</jira.data.version>
     </properties>
 
