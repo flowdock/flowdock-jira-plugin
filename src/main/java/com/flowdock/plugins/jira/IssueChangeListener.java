@@ -6,16 +6,19 @@ import com.atlassian.jira.event.issue.AbstractIssueEventListener;
 import com.atlassian.jira.event.issue.IssueEvent;
 import com.atlassian.jira.event.issue.IssueEventListener;
 import com.flowdock.plugins.jira.config.FlowdockConfigurationManager;
+import org.springframework.beans.factory.DisposableBean;
 
 public class IssueChangeListener extends AbstractIssueEventListener implements
-		IssueEventListener {
+		IssueEventListener, DisposableBean {
 	private FlowdockEventRenderer eventRenderer;
 	private FlowdockConfigurationManager flowdockConfigurationManager;
+	private EventPublisher publisher;
 	
 	public IssueChangeListener(EventPublisher publisher, FlowdockEventRenderer eventRenderer, FlowdockConfigurationManager manager) {
 		// Automatically register myself as an event listener.
 		publisher.register(this);
-		
+
+		this.publisher = publisher;
 		this.eventRenderer = eventRenderer;
 		this.flowdockConfigurationManager = manager;
 	}
@@ -24,6 +27,11 @@ public class IssueChangeListener extends AbstractIssueEventListener implements
 	public void onIssueEvent(IssueEvent event) {
 		String apiKey = this.flowdockConfigurationManager.getApiKeyForProject(event.getIssue().getProjectObject());
 		FlowdockConnection.sendApiMessage(this.eventRenderer.renderEvent(event), apiKey);
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		this.publisher.unregister(this);
 	}
 
 	/**
