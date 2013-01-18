@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flowdock.plugins.jira</groupId>
     <artifactId>flowdock-jira-plugin</artifactId>
     <version>1.50.5</version>
-
     <organization>
         <name>Flowdock Ltd</name>
         <url>http://www.flowdock.com/</url>
     </organization>
-
     <name>Flowdock for JIRA</name>
     <description>Flowdock is a collaboration tool for technical teams. This plugin streams your activity from JIRA to your team's Flowdock feed.</description>
     <packaging>atlassian-plugin</packaging>
-
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -44,13 +38,12 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>${amps.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
@@ -66,10 +59,9 @@
             </plugin>
         </plugins>
     </build>
-
     <properties>
-        <jira.version>5.1</jira.version>
+        <jira.version>5.2</jira.version>
         <jira.data.version>LATEST</jira.data.version>
+        <amps.version>4.1.2</amps.version>
     </properties>
-
 </project>
