@@ -1,192 +1,44 @@
 <html>
 <head>
   <title>Configure Flowdock integration in JIRA</title>
+  <meta name="decorator" content="atl.general">
 </head>
 <body>
+<header class="aui-page-header">
+  <div class="aui-page-header-inner">
+    <h2>Configure Flowdock integration in JIRA</h2>
+    <p><a href="https://www.flowdock.com/?utm_campaign=jira_config&utm_source=jira" target="_blank">Flowdock</a> is a chat-based collaboration app, that keeps your team up-to-date about what's happening in JIRA. For more information about Flowdock, <a target="_blank" href="http://www.youtube.com/watch?v=NIoDFvNS-_A">check out the screencast</a>.</p>
 
-<style type="text/css">
-div.content {
-  margin: 0 0 0 20px;
-  font-size: 15px;
-}
-.content .flowdock-header {
-  margin-bottom: 20px;
-  height: 85px;
-}
-.content .flowdock-container {
-  float: left;
-  margin: 15px 0 15px 0;
-}
-.content .description {
-        float: left;
-  width: 400px;
-  font-size: 18px;
-  padding: 10px 0 0 10px;
-  margin: auto 0 auto 0;
-  margin-left: 120px;
-  font-family: Helvetica, Arial, sans-serif;
-  color: #474747;
-}
-.content .description a:link,
-.content .description a:active{
-        color: #0072bc;
-        text-decoration: none;
-}
-.content .description a:visited {
-        color: #0072bc;
-        text-decoration: none;
-}
-.content .description a:hover {
-        color: #000;
-}
-.content .flowdock-logo {
-        float: left;
-        width: 78px;
-        height: 85px;
-        padding-right: 10px;
-        background: #FFF url('https://static.flowdock.com/images/confluence/flowdock-logo-notext-dropshadow.png') no-repeat;
-}
-
-.content .header {
-  float: left;
-  padding: 0 14px 0 19px;
-  font-size: 17px !important;
-  font-family: Helvetica, Arial, sans-serif !important;
-  font-weight: bold !important;
-  line-height: 40px;
-}
-
-
-.content .item {
-  float: left;
-  padding: 14px 14px 14px 19px;
-  border: 1px solid #d4d4d4;
-  font-size: 15px;
-  font-family: Helvetica, Arial, sans-serif;
-  background-color: #F0F0F0;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  -moz-box-shadow:inset 0 0 10px #FFF;
-  -webkit-box-shadow:inset 0 0 10px #FFF;
-  box-shadow:inset 0 0 10px #FFF;
-  text-shadow: 0 1px 0px #FFF;
-}
-
-.content .item-wrapper, .content .header-wrapper {
-        float: left;
-        clear: both;
-        margin: 0 0 10px 0;
-        padding: 0;
-        font-size: 15px;
-}
-
-.content .item-wrapper {
-        -moz-box-shadow: 0 0 5px #e2e2e2;
-         -webkit-box-shadow: 0 0 5px #e2e2e2;
-         box-shadow: 0 0 5px #e2e2e2;
-}
-
-.content .item:hover {
-  background-color: #F1F1F1;
-  border: 3px solid rgba(42,169,230,0.3);
-  padding: 12px 12px 12px 17px;
-}
-.content .column-left {
-  float: left;
-  width: 200px;
-  margin: auto 0 auto 0;
-  padding-right: 20px;
-  border-right: 1px solid #FFF;
-}
-.content .column-left p {
-  margin: 0 0 0 0;
-  font-size: 13px;
-  line-height: 20px;
-  color: #474747;
-}
-.content .column-right {
-  float: left;
-  height: 100%;
-  line-height: 40px;
-  padding-left: 20px;
-}
-
-.content .item .column-right {
-  border-left: 1px solid #e2e2e2;
-}
-
-.content .column-right .apikey {
-        width: 240px;
-        height: 14px;
-        background: #FFF url('https://static.flowdock.com/images/confluence/bullet_key.png') no-repeat 98% 50%;
-        padding: 3px 25px 3px 3px;
-        line-height: 20px;
-  font-size: 12px;
-  font-family: "Lucida Console", "Verdana", "Arial", sans-serif;
-  color: #474747;
-        border: 2px solid #d4d4d4;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-.content .column-right .apikey:focus {
-  color: #000;
-  background-color: #FFFDCC;
-}
-
-.content .flowdock-container img.tick {
-  height: 16px;
-  width: 16px;
-  padding: 0;
-  margin: 0 0 -3px 10px !important;
-}
-</style>
-
-<div class="content">
-  <div class="flowdock-header">
-    <span class="flowdock-logo"/>
-    <span class="description">
-      Flowdock keeps your team up-to-date about what's happening in JIRA. Check out the <a href="https://www.flowdock.com/help/jira?utm_campaign=jira_config&utm_source=jira" target="_blank">help page</a> to get an API token and more instructions.
-    </span>
+    <p><a href="https://www.flowdock.com/help/jira?utm_campaign=jira_config&utm_source=jira" target="_blank">&raquo; Visit the help page to get your flow API token</a>.
   </div>
+</header>
 
-  <div style="clear: both"/>
+#if ($apiKeyPairs.size() > 0)
 
+  <form action="configureFlowdock!save.jspa" method="post" class="aui">
+    <h2>Add Flowdock API tokens for JIRA projects</h2>
+    <input type="hidden" name="atl_token" value="$atl_token"/>
 
-  #if ($apiKeyPairs.size() > 0)
-    <div class="flowdock-container">
-      <form action="configureFlowdock!save.jspa" method="post">
-        <input type="hidden" name="atl_token" value="$atl_token"/>
-        <div class="header-wrapper header">
-          <div class="header">
-            <div class="column-left">Project</div>
-            <div class="column-right">Flow API Token</div>
-          </div>
+    <fieldset>
+      #foreach ($apiKeyPair in $apiKeyPairs)
+        <div class="field-group">
+          <label for="foo">$textutils.htmlEncode($apiKeyPair.project.name)</label>
+          <input type="hidden" name="projectKeys" value="$textutils.htmlEncode($apiKeyPair.projectKey)"/>
+          <input type="text" size=35 name="apiKeys" class="text" value="$textutils.htmlEncode($apiKeyPair.apiKeyNotNull)"/>
         </div>
+      #end
+    </fieldset>
 
-        #foreach ($apiKeyPair in $apiKeyPairs)
-        <div class="item-wrapper">
-          <div class="item">
-            <div class="column-left">
-              $textutils.htmlEncode($apiKeyPair.project.name)
-              <input type="hidden" name="projectKeys" value="$textutils.htmlEncode($apiKeyPair.projectKey)"/>
-            </div>
-            <div class="column-right">
-              <input type="text" size=35 name="apiKeys" class="apikey" value="$textutils.htmlEncode($apiKeyPair.apiKeyNotNull)"/>
-            </div>
-          </div>
-        </div>
-        <div style="clear: both"/>
-        #end
-
-        <input type="submit" class="spaced" value="Save changes" />
-      </form>
-
+    <div class="buttons-container">
+      <div class="buttons">
+        <input type="submit" class="button submit" value="Save changes" />
+      </div>
     </div>
-  #else
-    <p>Please create at least one JIRA project before configuring the Flowdock integration.</p>
-  #end
-</div>
+  </form>
+
+#else
+  <p>Please create at least one JIRA project before configuring the Flowdock integration.</p>
+#end
+
 </body>
 </html>

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flowdock.plugins.jira</groupId>
     <artifactId>flowdock-jira-plugin</artifactId>
-    <version>1.50.5</version>
+    <version>1.60.1</version>
     <organization>
         <name>Flowdock Ltd</name>
         <url>http://www.flowdock.com/</url>
@@ -60,7 +60,7 @@
         </plugins>
     </build>
     <properties>
-        <jira.version>5.2</jira.version>
+        <jira.version>6.0-m02</jira.version>
         <jira.data.version>LATEST</jira.data.version>
         <amps.version>4.1.2</amps.version>
     </properties>
