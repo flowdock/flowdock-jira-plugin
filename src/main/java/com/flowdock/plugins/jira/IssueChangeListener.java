@@ -27,7 +27,7 @@ public class IssueChangeListener extends AbstractIssueEventListener implements
 	public void onIssueEvent(IssueEvent event) {
 		String apiKeys = this.flowdockConfigurationManager.getApiKeyForProject(event.getIssue().getProjectObject());
 		for(String apiKey: apiKeys.split(",")){
-			FlowdockConnection.sendApiMessage(this.eventRenderer.renderEvent(event), apiKey);
+			FlowdockConnection.sendApiMessage(this.eventRenderer.renderEvent(event), apiKey.trim());
 		}
 	}
 
