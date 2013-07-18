@@ -23,14 +23,12 @@ public class FlowdockEventRenderer {
 	private String baseUrl;
 	private JiraVelocityHelper jiraVelocityHelper;
 	private JiraAuthenticationContext jiraAuthenticationContext;
-	private I18nHelper i18nHelper;
 	
 	public FlowdockEventRenderer(final JiraAuthenticationContext jiraAuthenticationContext) {
 		// Magic trick to get the JIRA baseUrl.
 		this.baseUrl = ManagerFactory.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
 		this.jiraVelocityHelper = new JiraVelocityHelper(ComponentManager.getInstance().getFieldManager());;
 		this.jiraAuthenticationContext = jiraAuthenticationContext;
-		this.i18nHelper = this.jiraAuthenticationContext.getI18nHelper();
 	}
 	
 	public Map<String, String> renderEvent(IssueEvent event) {
@@ -128,9 +126,10 @@ public class FlowdockEventRenderer {
 				newStringKey = "newstring";
 			}
 
-			String fieldName = this.jiraVelocityHelper.getFieldName(changedItem, this.i18nHelper);
-			String oldValue = this.jiraVelocityHelper.getPrettyFieldString(changedItem.getString("field"), changedItem.getString(oldStringKey), this.i18nHelper);
-			String newValue = this.jiraVelocityHelper.getPrettyFieldString(changedItem.getString("field"), changedItem.getString(newStringKey), this.i18nHelper);
+			I18nHelper i18nHelper = this.jiraAuthenticationContext.getI18nHelper();
+			String fieldName = this.jiraVelocityHelper.getFieldName(changedItem, i18nHelper);
+			String oldValue = this.jiraVelocityHelper.getPrettyFieldString(changedItem.getString("field"), changedItem.getString(oldStringKey), i18nHelper);
+			String newValue = this.jiraVelocityHelper.getPrettyFieldString(changedItem.getString("field"), changedItem.getString(newStringKey), i18nHelper);
 
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("field", fieldName);
