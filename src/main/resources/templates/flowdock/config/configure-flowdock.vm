@@ -17,6 +17,7 @@
 
   <form action="configureFlowdock!save.jspa" method="post" class="aui">
     <h2>Add Flowdock API tokens for JIRA projects</h2>
+    <p>You can send notifications to multiple flows by seperating API tokens with commas: "abcd...,1234....,ZYXW...."</p>
     <input type="hidden" name="atl_token" value="$atl_token"/>
 
     <fieldset>
