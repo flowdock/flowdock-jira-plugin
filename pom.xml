@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flowdock.plugins.jira</groupId>
     <artifactId>flowdock-jira-plugin</artifactId>
-    <version>1.60.2</version>
+    <version>1.60.3</version>
     <organization>
         <name>Flowdock Ltd</name>
         <url>http://www.flowdock.com/</url>
@@ -41,6 +41,12 @@
     <build>
         <plugins>
             <plugin>
+              	<groupId>com.atlassian.maven.plugins</groupId>
+              	<artifactId>maven-amps-plugin</artifactId>
+              	<version>${amps.version}</version>
+              	<extensions>true</extensions>
+        	  </plugin>
+	          <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
                 <version>${amps.version}</version>
