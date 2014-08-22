@@ -23,75 +23,77 @@ public class FlowdockEventRenderer {
 	private String baseUrl;
 	private JiraVelocityHelper jiraVelocityHelper;
 	private JiraAuthenticationContext jiraAuthenticationContext;
-	
+
 	public FlowdockEventRenderer(final JiraAuthenticationContext jiraAuthenticationContext) {
 		// Magic trick to get the JIRA baseUrl.
 		this.baseUrl = ManagerFactory.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
 		this.jiraVelocityHelper = new JiraVelocityHelper(ComponentManager.getInstance().getFieldManager());;
 		this.jiraAuthenticationContext = jiraAuthenticationContext;
 	}
-	
+
 	public Map<String, String> renderEvent(IssueEvent event) {
 		HashMap<String, String> result = new HashMap<String, String>();
-		
+
 		// Comment: optional
 		if (event.getComment() != null) {
 			result.put("comment_body", event.getComment().getBody());
 		}
-		
+
 		// User
-		result.put("user_email", event.getUser().getEmailAddress());
-		result.put("user_name", event.getUser().getDisplayName());
-		
+		if(event.getUser() != null) {
+			result.put("user_email", event.getUser().getEmailAddress());
+			result.put("user_name", event.getUser().getDisplayName());
+		}
+
 		// Project
 		result.put("project_name", event.getIssue().getProjectObject().getName());
 		result.put("project_url", this.baseUrl + "/browse/" + event.getIssue().getProjectObject().getKey());
-		
+
 		// Issue
 		addIssueData(result, event);
-		
+
 		// Event type
 		addEventType(result, event);
-		
+
 		return result;
 	}
-	
+
 	private void addIssueData(Map<String, String> result, IssueEvent event) {
 		Issue issue = event.getIssue();
-		
+
 		// Basic data
 		result.put("issue_type", issue.getIssueTypeObject().getName());
 		result.put("issue_status", issue.getStatusObject().getName());
-		
+
 		result.put("issue_key", issue.getKey());
 		result.put("issue_url", this.baseUrl + "/browse/" + issue.getKey());
-		
+
 		if (issue.getResolutionObject() != null) {
 			result.put("issue_resolution", issue.getResolutionObject().getName());
 		}
-		
+
 		// Fields
 		if (issue.getAssignee() != null) {
 			result.put("issue_assignee_name", issue.getAssigneeUser().getDisplayName());
 			result.put("issue_assignee_email", issue.getAssigneeUser().getEmailAddress());
 		}
-		
+
 		if (issue.getReporter() != null) {
 			result.put("issue_reporter_name", issue.getReporterUser().getDisplayName());
 			result.put("issue_reporter_email", issue.getReporterUser().getEmailAddress());
 		}
-		
+
 		result.put("issue_summary", issue.getSummary());
 
 		result.put("issue_changelog", getChangelog(event));
-		
+
 		if (issue.getPriorityObject() != null) {
 			result.put("issue_priority", issue.getPriorityObject().getName());
 		}
-		
+
 		result.put("issue_votes", issue.getVotes().toString());
 		result.put("issue_environment", issue.getEnvironment());
-		
+
 		if (issue.getDescription() != null) {
 			result.put("issue_description", issue.getDescription());
 		}
@@ -141,13 +143,13 @@ public class FlowdockEventRenderer {
 
 		return result;
 	}
-	
+
 	private void addEventType(HashMap<String, String> result, IssueEvent event) {
 		Long eventTypeId = event.getEventTypeId();
 		result.put("event_type_id", eventTypeId.toString()); // mostly for debugging purposes
-		
+
 		String eventType = "unknown";
-		
+
 		if (eventTypeId.equals(EventType.ISSUE_CREATED_ID)) {
 			eventType = "create";
 		} else if (eventTypeId.equals(EventType.ISSUE_COMMENTED_ID)) {
@@ -173,8 +175,8 @@ public class FlowdockEventRenderer {
 		} else if (eventTypeId.equals(EventType.ISSUE_WORKSTOPPED_ID)) {
 			eventType = "stop_work";
 		}
-		
+
 		result.put("event_type", eventType);
-		
+
 	}
 }
