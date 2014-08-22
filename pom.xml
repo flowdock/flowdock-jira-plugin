@@ -68,6 +68,6 @@
     <properties>
         <jira.version>LATEST</jira.version>
         <jira.data.version>LATEST</jira.data.version>
-        <amps.version>4.2.10</amps.version>
+        <amps.version>5.0.3</amps.version>
     </properties>
 </project>
