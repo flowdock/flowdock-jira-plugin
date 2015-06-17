@@ -8,3 +8,8 @@
 ## Running
 
 Use 'atlas-run'.
+
+## Updating
+
+* Update `jira.version` value in `pom.xml` (you can find EAP builds [here](https://maven.atlassian.com/content/groups/public/com/atlassian/jira/jira-api/))
+* Run `atlas-run --version <jira.version>`
