@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flowdock.plugins.jira</groupId>
     <artifactId>flowdock-jira-plugin</artifactId>
-    <version>1.60.3</version>
+    <version>1.70.0</version>
     <organization>
         <name>Flowdock Ltd</name>
         <url>http://www.flowdock.com/</url>
@@ -21,7 +21,13 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.jira</groupId>
-            <artifactId>atlassian-jira</artifactId>
+            <artifactId>jira-core</artifactId>
+            <version>${jira.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-api</artifactId>
             <version>${jira.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -40,12 +46,6 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-              	<groupId>com.atlassian.maven.plugins</groupId>
-              	<artifactId>maven-amps-plugin</artifactId>
-              	<version>${amps.version}</version>
-              	<extensions>true</extensions>
-        	  </plugin>
 	          <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
@@ -66,8 +66,27 @@
         </plugins>
     </build>
     <properties>
-        <jira.version>LATEST</jira.version>
+        <jira.version>7.0.0-eap3</jira.version>
         <jira.data.version>LATEST</jira.data.version>
-        <amps.version>5.0.3</amps.version>
+        <amps.version>6.0.1</amps.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>codelds</id>
+            <url>https://code.lds.org/nexus/content/groups/main-repo</url>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <url>https://maven.atlassian.com/repository/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+        </repository>
+    </repositories>
 </project>

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.reflect.Type;
 
-import com.atlassian.jira.ManagerFactory;
 import com.atlassian.jira.config.properties.APKeys;
 import com.atlassian.jira.event.issue.IssueEvent;
 import com.atlassian.jira.event.type.EventType;
@@ -16,6 +15,7 @@ import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.ComponentManager;
 import org.ofbiz.core.entity.GenericValue;
+import com.atlassian.jira.component.ComponentAccessor;
 
 import com.google.gson.Gson;
 
@@ -26,8 +26,8 @@ public class FlowdockEventRenderer {
 
 	public FlowdockEventRenderer(final JiraAuthenticationContext jiraAuthenticationContext) {
 		// Magic trick to get the JIRA baseUrl.
-		this.baseUrl = ManagerFactory.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
-		this.jiraVelocityHelper = new JiraVelocityHelper(ComponentManager.getInstance().getFieldManager());;
+		this.baseUrl = ComponentAccessor.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
+		this.jiraVelocityHelper = new JiraVelocityHelper(ComponentAccessor.getFieldManager());
 		this.jiraAuthenticationContext = jiraAuthenticationContext;
 	}
 
