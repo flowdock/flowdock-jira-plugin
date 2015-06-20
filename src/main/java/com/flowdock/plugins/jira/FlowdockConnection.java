@@ -12,15 +12,34 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+
 public class FlowdockConnection {
-	public static void sendApiMessage(Map<String, String> params, String apiKey) {
+	
+	private static final Logger log = Logger.getLogger(FlowdockConnection.class);
+	
+	public static void sendApiMessage(final Map<String, String> params, String apiKey) {
 		if (params == null || apiKey == null) {
 			return;
 		}
 		
 		try {
-			URL apiUrl = getApiUrl(apiKey);
-			postData(apiUrl, params);
+			final URL apiUrl = getApiUrl(apiKey);
+			
+			// Run HTTP POST call in a dedicated thread to avoid blocking and
+			// slowing down Jira.
+			Thread postThread = new Thread() {
+				public void run() {
+					try {
+						log.debug(String.format("Starting HTTP POST call to %s", apiUrl));
+						postData(apiUrl, params);
+					} catch (Exception e) {
+						log.error(String.format("Error at HTTP POST call to %s", apiUrl));
+						log.error(e);
+					}
+				}
+			};
+			postThread.start();
 		} catch (MalformedURLException mue) {
 			
 		} catch (IOException ioe) {
